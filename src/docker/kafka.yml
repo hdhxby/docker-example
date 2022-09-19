@@ -1,0 +1,13 @@
+version: '3'
+services:
+    zookeeper:
+        image: zookeeper
+        restart: always
+    kafka:
+        build:
+            context: ./kafka
+            dockerfile: Dockerfile
+        image: thinkafka
+        ports:
+            -   9092:9092
+        restart: always

@@ -1,0 +1,20 @@
+version: '3'
+services:
+    redis1:
+        image: redis
+        hostname: redis1
+        ports:
+            - 6379:6379
+        restart: always
+    redis2:
+        image: redis
+        hostname: redis2
+        ports:
+            - 6380:6379
+        restart: always
+    redis3:
+        image: redis
+        hostname: redis2
+        ports:
+            - 6381:6379
+        restart: always
