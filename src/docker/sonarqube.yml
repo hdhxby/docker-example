@@ -2,15 +2,13 @@ version: '3'
 services:
     sonarqube:
         image: sonarqube:7.8-community
-#        volumes:
-#         - sonarqube/sonarqube:/opt/sonarqube/conf
-#         - sonarqube/data:/opt/sonarqube/data
-#         - sonarqube/logs:/opt/sonarqube/logs
-#            - sonarqube/extensions/jdbc-driver/mysql:/opt/sonarqube/extensions/jdbc-driver/mysql
+        volumes:
+         - sonarqube/sonarqube:/opt/sonarqube/conf
+         - sonarqube/data:/opt/sonarqube/data
+         - sonarqube/logs:/opt/sonarqube/logs
         environment:
             - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-#            - sonar.jdbc.url=jdbc:mysql://localhost:3306/app?useUnicode=true&characterEncoding=utf8
-#            - sonar.jdbc.username=root
-#            - sonar.jdbc.password=
         ports:
             - 9000:9000
+volumes:
+    sonarqube:

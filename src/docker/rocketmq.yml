@@ -5,8 +5,8 @@ services:
         container_name: rmqnamesrv
         ports:
             - 9876:9876
-#        volumes:
-#            - ./data/namesrv/logs:/home/rocketmq/logs
+        volumes:
+            - rmqnamesrv/logs:/home/rocketmq/logs
         command: sh mqnamesrv
         restart: always
     broker:
@@ -16,14 +16,13 @@ services:
             - 10909:10909
             - 10911:10911
             - 10912:10912
-#        volumes:
-#            - ./data/broker/logs:/home/rocketmq/logs
-#            - ./data/broker/store:/home/rocketmq/store
-#            - ./rocketmq/broker.conf:/home/rocketmq/rocketmq-4.5.0/conf/broker.conf
+        volumes:
+            - rmqbroker/logs:/home/rocketmq/logs
+            - rmqbroker/store:/home/rocketmq/store
         command: sh mqbroker -n namesrv:9876 -c ../conf/broker.conf
         restart: always
-#        depends_on:
-#            - namesrv
+        depends_on:
+            - namesrv
     rocketmq-console:
         image: apacherocketmq/rocketmq-console:2.0.0
         container_name: rocketmq-console
@@ -31,7 +30,10 @@ services:
            - JAVA_OPTS= -Drocketmq.namesrv.addr=namesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false
         expose:
             - 8080
-#        restart: always
-#        depends_on:
-#            - namesrv
-#            - broker
+        restart: always
+        depends_on:
+            - namesrv
+            - broker
+volumes:
+    rmqnamesrv:
+    rmqbroker:
