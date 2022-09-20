@@ -1,7 +1,7 @@
 version: '2'
 services:
     namesrv:
-        image: apacherocketmq/rocketmq:4.9.3-alpine
+        image: apacherocketmq/rocketmq
         container_name: rmqnamesrv
         ports:
             - 9876:9876
@@ -10,7 +10,7 @@ services:
         command: sh mqnamesrv
         restart: always
     broker:
-        image: apacherocketmq/rocketmq:4.9.3-alpine
+        image: apacherocketmq/rocketmq
         container_name: rmqbroker
         ports:
             - 10909:10909
