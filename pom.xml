@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.github.hdhxby</groupId>
+    <artifactId>docker-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+    <properties>
+
+        <!-- Build properties -->
+<!--        <maven.version>3.3.9</maven.version>-->
+        <java.version>17</java.version>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <start-class>io.github.hdhxby.docker.example.DockerApplication</start-class>
+        <!-- Dependency versions -->
+        <spring-boot.version>2.3.11.RELEASE</spring-boot.version>
+        <spring-cloud.version>Hoxton.SR12</spring-cloud.version>
+        <!-- Plugin versions -->
+        <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
+        <jib-maven-plugin.image>docker://openjdk:17</jib-maven-plugin.image>
+        <jib-maven-plugin.architecture>arm64</jib-maven-plugin.architecture>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <!-- 三方库 -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <dependencies>
+        <!-- 三方库 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                    <fork>true</fork>
+                    <!--
+                    Enable the line below to have remote debugging of your application on port 5005
+                    <jvmArguments>-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005</jvmArguments>
+                    -->
+                </configuration>
+
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>${jib-maven-plugin.version}</version>
+                <!-- https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md -->
+                <configuration>
+                    <from>
+                        <image>${jib-maven-plugin.image}</image>
+                        <platforms>
+                            <platform>
+                                <architecture>${jib-maven-plugin.architecture}</architecture>
+                                <os>linux</os>
+                            </platform>
+                        </platforms>
+                    </from>
+<!--                    <to>-->
+<!--                        <image>app:latest</image>-->
+<!--                    </to>-->
+<!--                    <container>-->
+<!--                        <entrypoint>-->
+<!--                            <shell>bash</shell>-->
+<!--                            <option>-c</option>-->
+<!--                            <arg>/entrypoint.sh</arg>-->
+<!--                        </entrypoint>-->
+<!--                        <ports>-->
+<!--                            <port>8080</port>-->
+<!--                        </ports>-->
+<!--                        <environment>-->
+<!--                            <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>-->
+<!--                            <JHIPSTER_SLEEP>0</JHIPSTER_SLEEP>-->
+<!--                        </environment>-->
+<!--                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>-->
+<!--                        <user>1000</user>-->
+<!--                    </container>-->
+<!--                    <extraDirectories>-->
+<!--                        <paths>src/main/docker/jib</paths>-->
+<!--                        <permissions>-->
+<!--                            <permission>-->
+<!--                                <file>/entrypoint.sh</file>-->
+<!--                                <mode>755</mode>-->
+<!--                            </permission>-->
+<!--                        </permissions>-->
+<!--                    </extraDirectories>-->
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+</project>
