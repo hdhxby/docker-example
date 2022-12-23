@@ -4,6 +4,7 @@ server:
 spring:
   application:
     name: docker-example
+
 management:
   endpoints:
     web:

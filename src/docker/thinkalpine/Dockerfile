@@ -1,4 +1,4 @@
-FROM amd64/buildpack-deps:buster-curl as builder
+FROM buildpack-deps:buster-curl as builder
 
 ARG ALPINE_MAJOR_VERSION=3
 ARG ALPINE_MINOR_VERSION=15
@@ -9,7 +9,7 @@ ARG ARCHITECTURE="aarch64"
 RUN set -x \
     && curl -SL --output /var/tmp/alpine-minirootfs.tar.gz https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_MAJOR_VERSION}.${ALPINE_MINOR_VERSION}/releases/aarch64/alpine-minirootfs-${ALPINE_MAJOR_VERSION}.${ALPINE_MINOR_VERSION}.${ALPINE_PATCH_VERSION}-${ARCHITECTURE}.tar.gz \
     && mkdir /alpine-minirootfs \
-    && tar -xzvf /var/tmp/alpine-minirootfs.tar.gz -C /alpine-minirootfs
+    && tar -xzvf /var/tmp/alpine-minirootfs.tar.gz -C /alpine-minirootfs \
 
 # 从零开始
 FROM scratch
