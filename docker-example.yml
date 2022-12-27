@@ -1,10 +1,11 @@
 version: '3'
 services:
-    docker-example:
-        build:
-            context: ./
-            dockerfile: Dockerfile
-        image: docker-example
-        ports:
-            -   8080:8080
-        restart: always
+  docker-example:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: hdhxby/docker-example
+    environment:
+      foo: foo
+    ports:
+      - 8080:8080

@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: docker-example
+    namespace: default
+    labels:
+        k8s-app: docker-example
+spec:
+    selector:
+        matchLabels:
+            k8s-app: docker-example
+    template:
+        metadata:
+            name: docker-example
+            labels:
+                k8s-app: docker-example
+        spec:
+            containers:
+                - name: docker-example
+                  image: hdhxby/docker-example
+                  imagePullPolicy: IfNotPresent
+                  livenessProbe:
+                    httpGet:
+                        scheme: HTTP
+                        path: /actuator/info
+                        port: 8080
+

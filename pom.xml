@@ -22,8 +22,8 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <start-class>io.github.hdhxby.docker.example.DockerApplication</start-class>
         <!-- Dependency versions -->
-        <spring-boot.version>2.7.5</spring-boot.version>
-        <spring-cloud.version>2021.0.5.0</spring-cloud.version>
+        <spring-boot.version>3.0.0</spring-boot.version>
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
         <!-- Plugin versions -->
         <jib-maven-plugin.version>3.3.1</jib-maven-plugin.version>
         <jib-maven-plugin.image>docker://openjdk:17</jib-maven-plugin.image>
@@ -71,6 +71,7 @@
     <build>
         <plugins>
             <plugin>
+                <!-- https://docs.spring.io/spring-boot/docs/3.0.0/maven-plugin/reference/htmlsingle/ -->
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>${spring-boot.version}</version>
@@ -92,10 +93,10 @@
 
             </plugin>
             <plugin>
+                <!-- https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md -->
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>${jib-maven-plugin.version}</version>
-                <!-- https://github.com/GoogleContainerTools/jib/blob/master/jib-maven-plugin/README.md -->
                 <configuration>
                     <from>
                         <image>${jib-maven-plugin.image}</image>

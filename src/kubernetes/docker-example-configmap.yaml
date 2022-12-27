@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: docker-example
+    namespace: default
+data:
+    foo: env
+
+    application-dev.yml: |
+        foo: dev

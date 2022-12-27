@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Pod
+metadata:
+  name: docker-example
+#  namespace: default # 可选,默认default
+  labels:
+    k8s-app: docker-example
+spec:
+  containers:
+    - name: docker-example
+      image: hdhxby/docker-example
+      imagePullPolicy: IfNotPresent
+      env:
+        - name: spring.profiles.active
+          value: dev
+        - name: foo
+          valueFrom:
+            configMapKeyRef:
+              name: docker-example
+              key: foo
+      volumeMounts:
+        - name: config
+          mountPath: /app
+          readOnly: true
+      volumes:
+        # 你可以在 Pod 级别设置卷，然后将其挂载到 Pod 内的容器中
+        - name: config
+          configMap:
+            name: docker-example
+            items:
+              - key: application-dev.yml
+                path: application-dev.yml

@@ -4,7 +4,8 @@ server:
 spring:
   application:
     name: docker-example
-
+  main:
+    allow-bean-definition-overriding: true
 management:
   endpoints:
     web:
