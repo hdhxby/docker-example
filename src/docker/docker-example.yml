@@ -1,9 +1,8 @@
 version: '3'
 services:
   docker-example:
-    build:
-      context: .
-      dockerfile: Dockerfile
     image: hdhxby/docker-example
+    environment:
+      foo: foo
     ports:
       - 8080:8080
