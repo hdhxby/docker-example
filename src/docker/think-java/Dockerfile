@@ -12,7 +12,7 @@ RUN set -x \
     && tar -xzvf /var/tmp/openjdk-${OPEN_JDK_MAJOR_VERSION}.${OPEN_JDK_MINOR_VERSION}.${OPEN_JDK_PATCH_VERSION}_linux-${ARCHITECTURE}_bin.tar.gz -C /openjdk-${OPEN_JDK_MAJOR_VERSION}.${OPEN_JDK_MINOR_VERSION}.${OPEN_JDK_PATCH_VERSION} \
 
 # 从零开始
-FROM scratch
+FROM alpine
 # 拷贝到容器
 COPY --from=builder ["/openjdk-17.0.2", "/"]
 # /etc/profile已经添加/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
