@@ -143,3 +143,11 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+
+## ARCHIVES
+*.7z
+*.gz
+*.rar
+*.tar
+*.tgz
+*.zip
