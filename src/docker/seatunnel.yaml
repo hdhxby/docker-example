@@ -1,0 +1,58 @@
+version: '3'
+services:
+  seatunnel02:
+    image: hdhxby/seatunnel:2.3.4
+    volumes:
+      - './seatunnel/config/hazelcast.yaml:/opt/seatunnel/config/hazelcast.yaml:ro'
+      - './seatunnel/config/hazelcast-client.yaml:/opt/seatunnel/config/hazelcast-client.yaml:ro'
+      - './seatunnel/lib/mysql-connector-j-8.0.33.jar:/opt/seatunnel-web/libs/mysql-connector-j-8.0.33.jar:ro'
+#    command: ["/opt/seatunnel/bin/seatunnel-cluster.sh"]
+    expose:
+      - 5801
+#    networks:
+#      seatunnel:
+#        ipv4_address: 100.10.10.2
+  seatunnel03:
+    image: hdhxby/seatunnel:2.3.4
+    volumes:
+      - './seatunnel/config/hazelcast.yaml:/opt/seatunnel/config/hazelcast.yaml:ro'
+      - './seatunnel/config/hazelcast-client.yaml:/opt/seatunnel/config/hazelcast-client.yaml:ro'
+      - './seatunnel/lib/mysql-connector-j-8.0.33.jar:/opt/seatunnel-web/libs/mysql-connector-j-8.0.33.jar:ro'
+#    command: ["/opt/seatunnel/bin/seatunnel-cluster.sh"]
+    expose:
+      - 5801
+#    networks:
+#      seatunnel:
+#        ipv4_address: 100.10.10.3
+  seatunnel04:
+    image: hdhxby/seatunnel:2.3.4
+    volumes:
+      - './seatunnel/config/hazelcast.yaml:/opt/seatunnel/config/hazelcast.yaml:ro'
+      - './seatunnel/config/hazelcast-client.yaml:/opt/seatunnel/config/hazelcast-client.yaml:ro'
+      - './seatunnel/lib/mysql-connector-j-8.0.33.jar:/opt/seatunnel/lib/mysql-connector-j-8.0.33.jar:ro'
+#    command: ["/opt/seatunnel/bin/seatunnel-cluster.sh"]
+    expose:
+      - 5801
+  seatunnel-web:
+    image: hdhxby/seatunnel-web:1.0.0
+    volumes:
+      - './seatunnel/config/hazelcast.yaml:/opt/seatunnel/config/hazelcast.yaml:ro'
+      - './seatunnel/config/hazelcast-client.yaml:/opt/seatunnel/config/hazelcast-client.yaml:ro'
+      - './seatunnel/lib/mysql-connector-j-8.0.33.jar:/opt/seatunnel/lib/mysql-connector-j-8.0.33.jar:ro'
+      - './seatunnel/config/hazelcast.yaml:/opt/seatunnel-web/conf/hazelcast.yaml:ro'
+      - './seatunnel/config/hazelcast-client.yaml:/opt/seatunnel-web/conf/hazelcast-client.yaml:ro'
+      - './seatunnel/config/application.yml:/opt/seatunnel-web/conf/application.yml:ro'
+      - './seatunnel/config/plugin-mapping.properties:/opt/seatunnel-web/conf/plugin-mapping.properties:ro'
+      - './seatunnel/logs:/opt/seatunnel-web/logs'
+    command: ["pwd", "&&"," /opt/seatunnel-web/bin/seatunnel-backend-daemon.sh", "start"]
+    ports:
+      - 8801:8801
+#    networks:
+#      seatunnel:
+#        ipv4_address: 100.10.10.4
+#networks:
+#  seatunnel:
+#    ipam:
+#      config:
+#        - subnet: 100.10.10.0/24
+#          gateway: 100.10.10.1

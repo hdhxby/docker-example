@@ -1,0 +1,14 @@
+version: '3'
+services:
+  alping:
+    image: alpine
+    command: ["ip", "addr"]
+    networks:
+      alpine:
+        ipv4_address: 100.10.11.2
+networks:
+  alpine:
+    ipam:
+      config:
+        - subnet: 100.10.11.0/24
+          gateway: 100.10.11.1

@@ -1,0 +1,14 @@
+version: "3"
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/prometheus.yaml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - 9090:9090
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M

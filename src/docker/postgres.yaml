@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    # shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+#    volumes:
+#      - ./postgresql/data/pg_hba.conf:/var/lib/postgresql/master/pg_hba.conf
+#      - ./postgresql/data/postgresql.conf:/var/lib/postgresql/master/postgresql.conf
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5432:5432"
+  postgres-slave:
+    image: postgres
+    restart: always
+    # set shared memory limit when using docker-compose
+    # shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+#    volumes:
+#      - ./postgresql/data/pg_hba.conf:/var/lib/postgresql/slave/pg_hba.conf
+#      - ./postgresql/data/postgresql.conf:/var/lib/postgresql/slave/postgresql.conf
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_PASSWORD: example
+    ports:
+      - "5433:5432"

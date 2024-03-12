@@ -1,0 +1,11 @@
+version: '3'
+services:
+  zookeeper:
+    image: zookeeper
+    ports:
+      - 2181:2181
+    restart: always
+    deploy:
+      resources:
+        limits:
+          memory: 4096M

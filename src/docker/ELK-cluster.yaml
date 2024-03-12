@@ -1,0 +1,42 @@
+version: '3'
+services:
+  elasticsearch:
+    image: elasticsearch:${ELASTIC_STACK_VERSION}
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - 9200:9200
+      - 9300:9300
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+  logstash:
+    image: logstash:${ELASTIC_STACK_VERSION}
+    container_name: logstash
+    ports:
+      - 5000:5000
+    volumes:
+      - ./logstash_pipeline/:/usr/share/logstash/pipeline:ro
+    depends_on: ['elasticsearch']
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+  kibana:
+    image: kibana:${ELASTIC_STACK_VERSION}
+    container_name: kibana
+    ports: ['5601:5601']
+    environment:
+      - SERVER_NAME=kibana.docker.internal
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - I18N_LOCALE=zh-CN
+    depends_on: ['elasticsearch']
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M

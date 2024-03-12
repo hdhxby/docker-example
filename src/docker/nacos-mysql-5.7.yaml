@@ -1,0 +1,18 @@
+version: "3"
+services:
+  nacos:
+    image: nacos/nacos-server:${NACOS_VERSION}
+    container_name: nacos
+    env_file:
+      - ../env/custom-application-config.env
+    volumes:
+      - ./init.d/application.properties:/home/nacos/conf/application.properties
+    ports:
+      - "8848:8848"
+      - "9848:9848"
+      - "9849:9849"
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M

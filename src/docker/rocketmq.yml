@@ -1,0 +1,46 @@
+version: "3"
+services:
+  mqnamesrv:
+    image: apache/rocketmq:${ROCKETMQ_VERSION}
+    container_name: rocketmq-mqnamesrv
+    ports:
+      - "9876:9876"
+    command: sh mqnamesrv
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+  mqbroker:
+    image: apache/rocketmq:${ROCKETMQ_VERSION}
+    container_name: rocketmq-mqbroker
+    volumes:
+      - ./rocketmq/rocketmq-${ROCKETMQ_VERSION}/conf/broker.conf:/home/rocketmq/rocketmq-${ROCKETMQ_VERSION}/conf/broker.conf:ro
+      - ./rocketmq/rocketmq-${ROCKETMQ_VERSION}/bin/runbroker.sh:/home/rocketmq/rocketmq-${ROCKETMQ_VERSION}/bin/runbroker.sh:ro
+    ports:
+      - "10911:10911"
+      - "10909:10909"
+      - "10912:10912"
+    environment:
+      - JAVA_OPT= -XX:+PrintCommandLineFlags
+    command: sh mqbroker -c /home/rocketmq/rocketmq-${ROCKETMQ_VERSION}/conf/broker.conf
+    depends_on:
+      - mqnamesrv
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M
+  rocketmq-dashboard:
+    image: apacherocketmq/rocketmq-dashboard
+    container_name: rocketmq-dashboard
+    environment:
+      JAVA_OPTS: -Drocketmq.namesrv.addr=mqnamesrv:9876
+    depends_on:
+      - mqnamesrv
+      - mqbroker
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 4096M

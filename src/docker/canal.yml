@@ -1,0 +1,36 @@
+# Use root/example as user/password credentials
+version: '3'
+
+services:
+  canal-server:
+    image: canal/canal-server:v1.1.7
+    container_name: canal
+#    volumes:
+#      - ./canal/instance.properties:/home/admin/canal-server/conf/example/instance.properties
+    ports:
+      - 11111:11111
+    environment:
+      - canal.instance.master.address=mysql:3306
+      - canal.instance.dbUsername=canal # 从库账号
+      - canal.instance.dbPassword=canal # 从库密码
+#    restart: always
+#    deploy:
+#      resources:
+#        limits:
+#          memory: 4096M
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 33306:8080
+  canal-admin:
+    image: canal/canal-admin:v1.1.7
+    container_name: canal
+    #    volumes:
+    #      - ./canal/instance.properties:/home/admin/canal-server/conf/example/instance.properties
+    ports:
+      - 11111:11111
+    environment:
+      - canal.instance.master.address=mysql:3306
+      - canal.instance.dbUsername=canal # 从库账号
+      - canal.instance.dbPassword=canal # 从库密码
